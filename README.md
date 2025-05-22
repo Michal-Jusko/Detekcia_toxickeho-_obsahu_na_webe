@@ -1,52 +1,82 @@
-# Detekcia_toxickeho-_obsahu_na_webe
-Repository for notebooks for BP
-# Detekcia toxického obsahu na webe – Experimenty k bakalárskej práci
+# Detekcia toxického obsahu na webe
 
-Tento repozitár obsahuje Jupyter notebooky, ktoré som vytvoril počas riešenia svojej bakalárskej práce
-na tému **„Detekcia toxického obsahu na webe“** (Michal Jusko, 2025, FEI TUKE).
+Autor: Michal Jusko  
+Rok: 2025  
+Fakulta elektrotechniky a informatiky, TUKE
 
-Cieľom bolo otestovať viacero prístupov na klasifikáciu komentárov ako toxických alebo netoxických –
-a to v rôznych jazykoch (slovenčina, angličtina) a pomocou rôznych typov modelov
-(monojazyčné, multilingválne, aj LLM modely ako ChatGPT).
+Tento repozitár obsahuje Jupyter notebooky a experimenty vytvorené v rámci bakalárskej práce „Detekcia toxického obsahu na webe“. Cieľom práce bolo otestovať viaceré prístupy ku klasifikácii komentárov ako toxických alebo netoxických – naprieč rôznymi jazykmi (slovenčina, angličtina) a pomocou rôznych typov modelov (monojazyčné, multilingválne, aj LLM modely ako ChatGPT).
 
 ## Prehľad notebookov
 
 ### Slovenský model
-- `final-slovak-bert.ipynb`: Tréning a vyhodnotenie SlovakBERT modelu na slovenskom datasete (binárna klasifikácia)
+- `final-slovak-bert.ipynb`  
+  Tréning a vyhodnotenie modelu SlovakBERT na slovenskom datasete (`hate_speech_slovak`).  
+  Úloha: binárna klasifikácia
 
 ### Anglické modely
-- `final-toxic-bert-binar.ipynb`: ToxicBERT trénovaný na anglických dátach (binárna klasifikácia)
-- `final-toxic-bert-miltilabel.ipynb`: Multilabel klasifikácia anglických komentárov (okrem severe_toxicity)
+- `final-toxic-bert-binar.ipynb`  
+  ToxicBERT trénovaný na anglických dátach (`civil_comments`).  
+  Úloha: binárna klasifikácia
 
-###  Multilingválny model
-- `final-xml-roberta.ipynb`: Tréning modelu XLM-RoBERTa na kombinovaných EN+SK dátach
+- `final-toxic-bert-miltilabel.ipynb`  
+  Multilabel klasifikácia anglických komentárov (okrem `severe_toxicity`).  
+  Triedy: `toxicity`, `obscene`, `threat`, `insult`, `identity_attack`, `sexual_explicit`
 
+### Multilingválny model
+- `final-xml-roberta.ipynb`  
+  Tréning XLM-RoBERTa modelu na kombinovaných EN+SK dátach (`civil_comments`, `hate_speech_slovak`, `toxi-text-3M`)  
+  Úloha: binárna klasifikácia
 
 ### Modely ChatGPT
-- `chatgpt-zero-shot.ipynb`: Zero-shot klasifikácia komentárov cez OpenAI ChatGPT
-- `chatgpt-few-shot.ipynb`: Few-shot klasifikácia s niekoľkými príkladmi v promptoch
+- `chatgpt-zero-shot.ipynb`  
+  Zero-shot klasifikácia komentárov pomocou OpenAI ChatGPT (bez finetuningu)
 
-## Spustenie a knižnice
-Všetky notebooky sú kompatibilné s Google Colab, Kaggle alebo bežným Python prostredím (odporúčaný Python 3.10+).
+- `chatgpt-few-shot.ipynb`  
+  Few-shot klasifikácia s niekoľkými príkladmi v promptoch
 
-Použité knižnice:
-- `transformers`, `datasets`, `scikit-learn`
-- `pandas`, `matplotlib`, `seaborn`
-- `openai` (pre ChatGPT časť)
+## Spustenie
 
-Niektoré notebooky využívajú Hugging Face datasets alebo OpenAI API – je potrebné mať vlastný API kľúč.
+1. Klonovanie repozitára:
+   ```
+   git clone https://github.com/Michal-Jusko/Detekcia_toxickeho-_obsahu_na_webe.git
+   ```
+
+2. Inštalácia závislostí (ak používaš lokálne prostredie):
+   ```
+   pip install -r requirements.txt
+   ```
+
+3. Otvor a spusti notebook podľa potreby (Google Colab, Kaggle, Jupyter Lab).
+
+Odporúčaná verzia Pythonu: 3.10+
+
+## Použité knižnice
+
+- transformers, datasets, scikit-learn
+- pandas, matplotlib, seaborn
+- openai (pre ChatGPT časť)
+
+Niektoré notebooky vyžadujú Hugging Face token alebo OpenAI API kľúč.
+
+## Dáta
+
+Použité datasety je potrebné stiahnuť manuálne (nie sú súčasťou repozitára):
+
+- https://huggingface.co/datasets/civil_comments
+- https://huggingface.co/datasets/TUKE-KEMT/hate_speech_slovak
+- https://huggingface.co/datasets/FredZhang7/toxi-text-3M
+
+Po stiahnutí ich uložte do priečinka `data/`.
 
 ## Výstupy
-Vo väčšine notebookov sú súčasťou aj:
-- klasifikačné metriky (F1, precision, ...),
-- vizualizácie (lossy, accuracy,...),
-- exporty do CSV alebo PNG (`./results/` priečinok),
-- zakomentované pokusy alebo poznámky počas ladenia
 
-## Poznámky autora
-Počas práce som testoval viacero nastavení modelov (napr. rôzne prahy, sampling, veľkosť dávok pri trénovaní),
-skúšal som aj veľké modely (napr. `xlm-roberta-large`), ale kvôli výpočtovým obmedzeniam som ostal pri základných verziách.
-Komentáre v notebookoch by mali vysvetliť moje rozhodnutia a testované alternatívy.
+Väčšina notebookov obsahuje:
 
-## Licencia
-Notebooky a skripty sú určené výhradne pre akademické účely (FEI TUKE, 2025).
+- klasifikačné metriky (F1, precision, recall, accuracy)
+- vizualizácie priebehu trénovania (grafy lossov a presnosti)
+- CSV a PNG výstupy v priečinku `results/`
+- zakomentované poznámky a alternatívne experimenty
+
+## Kontakt
+
+V prípade otázok: michal.jusko.2@student.tuke.sk
